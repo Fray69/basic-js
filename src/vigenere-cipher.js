@@ -1,3 +1,4 @@
+const CustomError = require("../extensions/custom-error");
 const alphaArr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const alpha = {
   A:0,

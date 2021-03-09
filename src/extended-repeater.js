@@ -1,21 +1,28 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function repeater(str, options) {
-  let separ = '+';
-    let defaultaddsepar = '|';
-    let res;
-    if (options.hasOwnProperty('separator')) {separ = options.separator; }
-    if (options.hasOwnProperty('additionSeparator')) { defaultaddsepar = options.additionSeparator; }
-    if (options.hasOwnProperty('addition')) {
-        let addition = options.addition + defaultaddsepar;
-        let fullAddition = Array(options.additionRepeatTimes).fill(addition).join('');
-        fullAddition = fullAddition.slice(0,fullAddition.length - defaultaddsepar.length);
-        res = str + fullAddition + separ;
-    } else { res = str + separ;}   
-    
-    let fulstr = Array(options.repeatTimes).fill(res).join('');
-    fulstr = fullStr.slice(0,fulstr.length - separ.length);
-    console.log(fulstr);
-    return fulstr;
+  let add = '';
+  let rez = '';
+  str = str + '';
+  if (options.repeatTimes === undefined) {options.repeatTimes = 0;}
+  if (options.additionRepeatTimes === undefined) {options.additionRepeatTimes = 0;}
+  if (options.addition === null || options.addition === false || options.addition === true) {options.addition = options.addition + '';}
+  if (!options.separator) {options.separator = '+'}
+  if (!options.additionSeparator && options.addition) {options.additionSeparator = '|'}
+  if (options.addition) {add = add + options.addition;}
+  if (options.additionSeparator && options.additionRepeatTimes !== 0) {add = add + options.additionSeparator;}
+  if (options.additionRepeatTimes) {
+    add = add.repeat(options.additionRepeatTimes);
+    if (options.additionSeparator) {
+      add = add.slice(0, add.length - options.additionSeparator.length);
+    }
+  }
+  if (options.repeatTimes > 0) {str = str + add + options.separator;} 
+  else {str = str + add;}
+  
+  if (options.repeatTimes) {rez = str.repeat(options.repeatTimes);}
+  rez = rez.slice(0, rez.length - options.separator.length);
+  if (rez) {return rez} 
+  else {return str}
 };
   
